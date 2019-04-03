@@ -276,4 +276,5 @@ app.controller('goodsController' ,function($scope,$controller,$location,goodsSer
        }
     }
 
+
 });	
