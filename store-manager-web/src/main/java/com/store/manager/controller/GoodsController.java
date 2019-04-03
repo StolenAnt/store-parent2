@@ -2,6 +2,7 @@ package com.store.manager.controller;
 import java.util.List;
 
 import com.store.pojo.TbGoods;
+import com.store.pojogroup.Goods;
 import com.store.sellergoods.service.GoodsService;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -66,7 +67,7 @@ public class GoodsController {
 	 * @return
 	 */
 	@RequestMapping("/findOne")
-	public TbGoods findOne(Long id){
+	public Goods findOne(Long id){
 		return goodsService.findOne(id);		
 	}
 	
