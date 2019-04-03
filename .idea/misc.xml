@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="FUSUsageTrigger">
+    <session id="-1717318111">
+      <usages-collector id="statistics.spring.core.usages.trigger">
+        <counts>
+          <entry key="fixes.SpringFacetInspection.AddFacetFix" value="1" />
+        </counts>
+      </usages-collector>
+    </session>
+  </component>
+  <component name="FrameworkDetectionExcludesConfiguration">
+    <file type="web" url="file://$PROJECT_DIR$/store-manager-web" />
+    <file type="web" url="file://$PROJECT_DIR$/store-sellergoods-service" />
+    <file type="web" url="file://$PROJECT_DIR$/store-shop-web" />
+    <file type="web" url="file://$USER_HOME$/Downloads/百度云下载/49黑马视频/17品优购电商系统开发(学习20天）/代码/品优购系统开发代码/day-01/pinyougou-parent/pinyougou-manager-web" />
+    <file type="web" url="file://$USER_HOME$/Downloads/百度云下载/49黑马视频/17品优购电商系统开发(学习20天）/代码/品优购系统开发代码/day-01/pinyougou-parent/pinyougou-sellergoods-service" />
+    <file type="web" url="file://$USER_HOME$/Downloads/百度云下载/49黑马视频/17品优购电商系统开发(学习20天）/代码/品优购系统开发代码/day-01/pinyougou-parent/pinyougou-shop-web" />
+  </component>
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/store-common/pom.xml" />
+        <option value="$PROJECT_DIR$/store-pojo/pom.xml" />
+        <option value="$PROJECT_DIR$/store-dao/pom.xml" />
+        <option value="$PROJECT_DIR$/store-sellergoods-interface/pom.xml" />
+      </list>
+    </option>
+    <option name="ignoredFiles">
+      <set>
+        <option value="$USER_HOME$/Downloads/百度云下载/49黑马视频/17品优购电商系统开发(学习20天）/代码/品优购系统开发代码/day-01/pinyougou-parent/pinyougou-common/pom.xml" />
+        <option value="$USER_HOME$/Downloads/百度云下载/49黑马视频/17品优购电商系统开发(学习20天）/代码/品优购系统开发代码/day-01/pinyougou-parent/pinyougou-dao/pom.xml" />
+        <option value="$USER_HOME$/Downloads/百度云下载/49黑马视频/17品优购电商系统开发(学习20天）/代码/品优购系统开发代码/day-01/pinyougou-parent/pinyougou-manager-web/pom.xml" />
+        <option value="$USER_HOME$/Downloads/百度云下载/49黑马视频/17品优购电商系统开发(学习20天）/代码/品优购系统开发代码/day-01/pinyougou-parent/pinyougou-pojo/pom.xml" />
+        <option value="$USER_HOME$/Downloads/百度云下载/49黑马视频/17品优购电商系统开发(学习20天）/代码/品优购系统开发代码/day-01/pinyougou-parent/pinyougou-sellergoods-interface/pom.xml" />
+        <option value="$USER_HOME$/Downloads/百度云下载/49黑马视频/17品优购电商系统开发(学习20天）/代码/品优购系统开发代码/day-01/pinyougou-parent/pinyougou-sellergoods-service/pom.xml" />
+        <option value="$USER_HOME$/Downloads/百度云下载/49黑马视频/17品优购电商系统开发(学习20天）/代码/品优购系统开发代码/day-01/pinyougou-parent/pinyougou-shop-web/pom.xml" />
+        <option value="$USER_HOME$/Downloads/百度云下载/49黑马视频/17品优购电商系统开发(学习20天）/代码/品优购系统开发代码/day-01/pinyougou-parent/pom.xml" />
+      </set>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/out" />
+  </component>
+</project>
