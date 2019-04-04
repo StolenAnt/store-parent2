@@ -51,7 +51,7 @@ public class GoodsController {
 	 * @return
 	 */
 	@RequestMapping("/update")
-	public Result update(@RequestBody TbGoods goods){
+	public Result update(@RequestBody Goods goods){
 		try {
 			goodsService.update(goods);
 			return new Result(true, "修改成功");
@@ -79,7 +79,7 @@ public class GoodsController {
 	@RequestMapping("/delete")
 	public Result delete(Long [] ids){
 		try {
-			goodsService.delete(ids);
+			goodsService.deleteManager(ids);
 			return new Result(true, "删除成功"); 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -98,5 +98,19 @@ public class GoodsController {
 	public PageResult search(@RequestBody TbGoods goods, int page, int rows  ){
 		return goodsService.findPage(goods, page, rows);		
 	}
-	
+
+	@RequestMapping("/updateStatus")
+	public Result updateStatus(Long[] ids,String status){
+		System.out.println(status);
+		try {
+
+			goodsService.UpdateStatus(ids, status);
+			return new Result(true,"成功");
+		}catch (Exception e){
+			e.printStackTrace();
+			return new Result(false,"失败");
+		}
+	}
+
+
 }

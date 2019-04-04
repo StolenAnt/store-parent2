@@ -4351,6 +4351,7 @@ table.text-center th {
 .bg-navy,
 .bg-teal,
 .bg-olive,
+.bg-olive2,
 .bg-lime,
 .bg-orange,
 .bg-fuchsia,
@@ -4458,6 +4459,9 @@ table.text-center th {
 }
 .bg-olive {
   background-color: #3d9970 !important;
+}
+.bg-olive2 {
+  background-color: #ff3300 !important;
 }
 .bg-lime {
   background-color: #01ff70 !important;

@@ -16,6 +16,7 @@ import com.github.pagehelper.PageHelper;
 
 
 import entity.PageResult;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 服务实现层
@@ -23,6 +24,7 @@ import entity.PageResult;
  *
  */
 @Service
+@Transactional//事物回滚 可以再方法上添加也可以在类上面增加 对于多表操作的问题
 public class GoodsServiceImpl implements GoodsService {
 
 	@Autowired
@@ -60,6 +62,7 @@ public class GoodsServiceImpl implements GoodsService {
 		return new PageResult(page.getTotal(), page.getResult());
 	}
 
+	//增加 修改 SKU列表需要调度的方法
 	private void setItemValue(TbItem item,Goods goods,TbGoods tbGoods){
 		//商品分类
 		item.setCategoryid(tbGoods.getCategory3Id());//
@@ -87,18 +90,9 @@ public class GoodsServiceImpl implements GoodsService {
 			item.setImage((String) imageList.get(0).get("url"));
 		}
 	}
-	/**
-	 * 增加
-	 */
-	@Override
-	public void add(Goods goods) {
-		TbGoods tbGoods=goods.getGoods();
-		tbGoods.setAuditStatus("0");
-		goodsMapper.insert(tbGoods);
 
-		goods.getGoodsDesc().setGoodsId(tbGoods.getId());
-		goodsDescMapper.insert(goods.getGoodsDesc());
-
+	//保存数据
+	private void SaveIteamList(TbGoods tbGoods,Goods goods){
 		if ("1".equals(tbGoods.getIsEnableSpec())) {
 
 			for (TbItem item : goods.getItemList()) {
@@ -127,6 +121,21 @@ public class GoodsServiceImpl implements GoodsService {
 
 			itemMapper.insert(item);
 		}
+	}
+	/**
+	 * 增加
+	 */
+	@Override
+	public void add(Goods goods) {
+		TbGoods tbGoods=goods.getGoods();
+		tbGoods.setIsMarketable("0");
+		tbGoods.setAuditStatus("0");
+		goodsMapper.insert(tbGoods);
+
+		goods.getGoodsDesc().setGoodsId(tbGoods.getId());
+		goodsDescMapper.insert(goods.getGoodsDesc());
+
+		SaveIteamList(tbGoods,goods);
 
 	}
 
@@ -135,8 +144,22 @@ public class GoodsServiceImpl implements GoodsService {
 	 * 修改
 	 */
 	@Override
-	public void update(TbGoods goods){
-		goodsMapper.updateByPrimaryKey(goods);
+	public void update(Goods goods){
+		//更新基本表数据
+		TbGoods tbGoods=goods.getGoods();
+		goodsMapper.updateByPrimaryKey(goods.getGoods());
+
+		//更新扩展表数据
+		goodsDescMapper.updateByPrimaryKey(goods.getGoodsDesc());
+
+		//删除原有的SKU列表
+		TbItemExample example=new TbItemExample();
+		TbItemExample.Criteria criteria=example.createCriteria();
+		criteria.andGoodsIdEqualTo(goods.getGoods().getId());
+		itemMapper.deleteByExample(example);
+
+		//插入新的SKU列表
+		SaveIteamList(tbGoods,goods);
 	}	
 	
 	/**
@@ -167,7 +190,18 @@ public class GoodsServiceImpl implements GoodsService {
 	@Override
 	public void delete(Long[] ids) {
 		for(Long id:ids){
+			TbGoodsDescExample example=new TbGoodsDescExample();
+			TbGoodsDescExample.Criteria criteria=example.createCriteria();
+			criteria.andGoodsIdEqualTo(id);
+			goodsDescMapper.deleteByExample(example);
+
+			TbItemExample example2=new TbItemExample();
+			TbItemExample.Criteria criteria1=example2.createCriteria();
+			criteria.andGoodsIdEqualTo(id);
+			itemMapper.deleteByExample(example2);
+
 			goodsMapper.deleteByPrimaryKey(id);
+
 		}		
 	}
 	
@@ -178,7 +212,7 @@ public class GoodsServiceImpl implements GoodsService {
 		
 		TbGoodsExample example=new TbGoodsExample();
 		TbGoodsExample.Criteria criteria = example.createCriteria();
-		
+		criteria.andIsDeleteIsNull();
 		if(goods!=null){			
 			if(goods.getSellerId()!=null && goods.getSellerId().length()>0){
 				//criteria.andSellerIdLike("%"+goods.getSellerId()+"%");
@@ -211,5 +245,30 @@ public class GoodsServiceImpl implements GoodsService {
 		Page<TbGoods> page= (Page<TbGoods>)goodsMapper.selectByExample(example);		
 		return new PageResult(page.getTotal(), page.getResult());
 	}
-	
+
+	@Override
+	public void UpdateStatus(Long[] ids, String status) {
+		for (Long id:ids){
+			TbGoods goods=goodsMapper.selectByPrimaryKey(id);
+			goods.setAuditStatus(status);
+			goodsMapper.updateByPrimaryKey(goods);
+
+		}
+	}
+
+	public void deleteManager(Long[] ids){
+		for (Long id:ids){
+			TbGoods goods=goodsMapper.selectByPrimaryKey(id);
+			goods.setIsDelete("1");
+			goodsMapper.updateByPrimaryKey(goods);
+		}
+	}
+
+	@Override
+	public void UpdateMarkStatus(Long id, String status) {
+		TbGoods goods=goodsMapper.selectByPrimaryKey(id);
+		goods.setIsMarketable(status);
+		goodsMapper.updateByPrimaryKey(goods);
+	}
+
 }

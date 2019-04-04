@@ -12,6 +12,7 @@ import com.github.pagehelper.PageHelper;
 
 
 import entity.PageResult;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 服务实现层
@@ -19,6 +20,7 @@ import entity.PageResult;
  *
  */
 @Service
+@Transactional
 public class SpecificationOptionServiceImpl implements SpecificationOptionService {
 
 	@Autowired

@@ -35,7 +35,7 @@ public interface GoodsService {
 	/**
 	 * 修改
 	 */
-	public void update(TbGoods goods);
+	public void update(Goods goods);
 	
 
 	/**
@@ -59,5 +59,13 @@ public interface GoodsService {
 	 * @return
 	 */
 	public PageResult findPage(TbGoods goods, int pageNum, int pageSize);
+
+
+	//批量审核
+	public void UpdateStatus(Long[] ids,String status);
+
+	public void deleteManager(Long[] ids);
+
+	public void UpdateMarkStatus(Long id,String status);
 	
 }

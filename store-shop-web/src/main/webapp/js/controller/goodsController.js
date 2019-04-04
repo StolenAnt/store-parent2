@@ -49,18 +49,21 @@ app.controller('goodsController' ,function($scope,$controller,$location,goodsSer
 	}
 	
 	//保存 
-	$scope.save=function(){				
+	$scope.save=function(){
+        $scope.entity.goodsDesc.introduction=editor.html();
 		var serviceObject;//服务层对象  				
-		if($scope.entity.id!=null){//如果有ID
+		if($scope.entity.goods.id!=null){//如果有ID
 			serviceObject=goodsService.update( $scope.entity ); //修改  
 		}else{
-			serviceObject=goodsService.add( $scope.entity  );//增加 
+
+			serviceObject=goodsService.add( $scope.entity  );//增加
 		}				
 		serviceObject.success(
 			function(response){
 				if(response.success){
 					//重新查询 
-		        	$scope.reloadList();//重新加载
+                    alert("保存成功");
+                    location.href='goods.html';
 				}else{
 					alert(response.message);
 				}
@@ -68,20 +71,20 @@ app.controller('goodsController' ,function($scope,$controller,$location,goodsSer
 		);				
 	}
 
-    $scope.add=function(){
-		$scope.entity.goodsDesc.introduction=editor.html();//
-        goodsService.add( $scope.entity  ).success(
-            function(response){
-                if(response.success){
-                    alert("录入成功");
-                    $scope.entity={};
-                    editor.html("");
-                }else{
-                    alert(response.message);
-                }
-            }
-        );
-    }
+    // $scope.add=function(){
+		// $scope.entity.goodsDesc.introduction=editor.html();//取富文本的内容
+    //     goodsService.add( $scope.entity  ).success(
+    //         function(response){
+    //             if(response.success){
+    //                 alert("录入成功");
+    //                 $scope.entity={};
+    //                 editor.html("");
+    //             }else{
+    //                 alert(response.message);
+    //             }
+    //         }
+    //     );
+    // }
 
 
 	
@@ -277,4 +280,16 @@ app.controller('goodsController' ,function($scope,$controller,$location,goodsSer
     }
 
 
+
+    //上下架操作
+
+    $scope.statusMark=['已下架','已上架'];
+
+    $scope.updateStatue=function (id,status) {
+        goodsService.updateStatue(id,status).success(
+            function (response) {
+                $scope.reloadList();
+            }
+        );
+    }
 });	
