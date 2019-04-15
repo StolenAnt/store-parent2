@@ -5,6 +5,8 @@ import java.util.List;
 
 import com.store.pojo.TbSeller;
 import entity.PageResult;
+import entity.Result;
+
 /**
  * 服务层接口
  * @author Administrator
@@ -62,5 +64,9 @@ public interface SellerService {
 
 
 	public void updateStatus(String sellerId,String status);
+
+
+
+	public void updatePassword(String name, String newpass);
 	
 }

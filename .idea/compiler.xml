@@ -7,12 +7,19 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="store-common" />
+        <module name="store-content-interface" />
+        <module name="store-content-service" />
         <module name="store-dao" />
         <module name="store-manager-web" />
         <module name="store-pojo" />
+        <module name="store-portal-web" />
+        <module name="store-search-interface" />
+        <module name="store-search-service" />
+        <module name="store-search-web" />
         <module name="store-sellergoods-interface" />
         <module name="store-sellergoods-service" />
         <module name="store-shop-web" />
+        <module name="store-solr-util" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>

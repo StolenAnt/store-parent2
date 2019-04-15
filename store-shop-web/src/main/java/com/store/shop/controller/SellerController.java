@@ -3,6 +3,9 @@ import java.util.List;
 
 import com.store.pojo.TbSeller;
 import com.store.sellergoods.service.SellerService;
+import com.store.shop.service.UserDetailsServiceImpl;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -73,6 +76,8 @@ public class SellerController {
 	@RequestMapping("/update")
 	public Result update(@RequestBody TbSeller seller){
 		try {
+			String sellerId=SecurityContextHolder.getContext().getAuthentication().getName();
+			seller.setSellerId(sellerId);
 			sellerService.update(seller);
 			return new Result(true, "修改成功");
 		} catch (Exception e) {
@@ -88,7 +93,8 @@ public class SellerController {
 	 */
 	@RequestMapping("/findOne")
 	public TbSeller findOne(String id){
-		return sellerService.findOne(id);
+			String sellerId=SecurityContextHolder.getContext().getAuthentication().getName();
+			return sellerService.findOne(sellerId);
 	}
 	
 	/**
@@ -116,6 +122,29 @@ public class SellerController {
 	@RequestMapping("/search")
 	public PageResult search(@RequestBody TbSeller seller, int page, int rows  ){
 		return sellerService.findPage(seller, page, rows);		
+	}
+
+	@RequestMapping("/updatepass")
+	public Result UpdatePassword(String oldpass,String newpass,String qpass){
+		String sellerId=SecurityContextHolder.getContext().getAuthentication().getName();
+		TbSeller seller = sellerService.findOne(sellerId);
+		BCryptPasswordEncoder passwordEncoder =new BCryptPasswordEncoder();
+
+		String npassword=passwordEncoder.encode(newpass);
+
+
+		boolean matches = passwordEncoder.matches(oldpass, seller.getPassword());
+		if (matches){
+			if (newpass.equals(qpass)){
+				sellerService.updatePassword(sellerId,npassword);
+				return new Result(true,"修改成功");
+			}else {
+				return new Result(false,"两次密码不一致 修改失败");
+			}
+		}else {
+			return new Result(false,"原密码不匹配,修改失败");
+		}
+
 	}
 	
 }

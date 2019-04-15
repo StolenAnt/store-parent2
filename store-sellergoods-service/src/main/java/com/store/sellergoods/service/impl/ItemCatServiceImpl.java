@@ -11,6 +11,7 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 
 import entity.PageResult;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -24,6 +25,10 @@ public class ItemCatServiceImpl implements ItemCatService {
 
 	@Autowired
 	private TbItemCatMapper itemCatMapper;
+
+	@Autowired
+	private RedisTemplate redisTemplate;
+
 	
 	/**
 	 * 查询全部
@@ -107,7 +112,22 @@ public class ItemCatServiceImpl implements ItemCatService {
 		TbItemCatExample example=new TbItemCatExample();
 		TbItemCatExample.Criteria criteria=example.createCriteria();
 		criteria.andParentIdEqualTo(id);
-		return itemCatMapper.selectByExample(example);
+
+		//将模板ID放入缓存 (商品分类名称作为Key)
+
+        List<TbItemCat> itemCatList = findAll();
+        for (TbItemCat itemCat:itemCatList){
+			Long name=0l;
+			name= (Long) redisTemplate.boundHashOps("itemCat").get(itemCat.getName());
+			if (name==null && name==0l) {
+				redisTemplate.boundHashOps("itemCat").put(itemCat.getName(), itemCat.getTypeId());
+			}else{
+				break;
+			}
+        }
+        System.out.println("将模板Id放入缓存.......");
+
+        return itemCatMapper.selectByExample(example);
 	}
 
 }

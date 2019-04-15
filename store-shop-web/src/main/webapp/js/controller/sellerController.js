@@ -50,6 +50,20 @@ app.controller('sellerController' ,function($scope,$controller   ,sellerService)
 			}		
 		);				
 	}
+
+	$scope.update=function(){
+        sellerService.update( $scope.entity ).success(
+        	function (response) {
+        		if (response.success) {
+                    alert(response.message);
+				}else{
+                    alert(response.message);
+				}
+
+            }
+		);
+
+	}
 	
 	 
 	//批量删除 
@@ -96,6 +110,22 @@ app.controller('sellerController' ,function($scope,$controller   ,sellerService)
 				$scope.loginName=response.loginName;
             }
 		);
+    }
+
+    $scope.oldpass;
+    $scope.newpass;
+    $scope.qpass;
+    $scope.updatePass=function () {
+
+		sellerService.updatepass( $scope.oldpass,$scope.newpass,$scope.qpass).success(
+			function (response) {
+                if(response.success){
+                    alert(response.message);
+                    location.href="/logout";
+                }else{
+                    alert(response.message);
+                }
+        });
     }
     
 });	

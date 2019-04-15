@@ -11,7 +11,11 @@
     </session>
   </component>
   <component name="FrameworkDetectionExcludesConfiguration">
+    <file type="web" url="file://$PROJECT_DIR$/store-content-service" />
     <file type="web" url="file://$PROJECT_DIR$/store-manager-web" />
+    <file type="web" url="file://$PROJECT_DIR$/store-portal-web" />
+    <file type="web" url="file://$PROJECT_DIR$/store-search-service" />
+    <file type="web" url="file://$PROJECT_DIR$/store-search-web" />
     <file type="web" url="file://$PROJECT_DIR$/store-sellergoods-service" />
     <file type="web" url="file://$PROJECT_DIR$/store-shop-web" />
     <file type="web" url="file://$USER_HOME$/Downloads/百度云下载/49黑马视频/17品优购电商系统开发(学习20天）/代码/品优购系统开发代码/day-01/pinyougou-parent/pinyougou-manager-web" />

@@ -7,6 +7,7 @@ import com.store.mapper.TbSellerMapper;
 import com.store.pojo.TbSeller;
 import com.store.pojo.TbSellerExample;
 import com.store.sellergoods.service.SellerService;
+import entity.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.github.pagehelper.Page;
@@ -175,5 +176,15 @@ public class SellerServiceImpl implements SellerService {
 		seller.setStatus(status);
 		sellerMapper.updateByPrimaryKey(seller);
 	}
+
+
+    @Override
+	public void updatePassword(String name, String newpass) {
+        TbSeller seller = sellerMapper.selectByPrimaryKey(name);
+        seller.setPassword(newpass);
+        sellerMapper.updateByPrimaryKey(seller);
+
+	}
+
 
 }

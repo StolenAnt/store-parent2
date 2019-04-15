@@ -197,7 +197,7 @@ public class GoodsServiceImpl implements GoodsService {
 
 			TbItemExample example2=new TbItemExample();
 			TbItemExample.Criteria criteria1=example2.createCriteria();
-			criteria.andGoodsIdEqualTo(id);
+			criteria1.andGoodsIdEqualTo(id);
 			itemMapper.deleteByExample(example2);
 
 			goodsMapper.deleteByPrimaryKey(id);
@@ -268,6 +268,16 @@ public class GoodsServiceImpl implements GoodsService {
 	public void UpdateMarkStatus(Long id, String status) {
 		TbGoods goods=goodsMapper.selectByPrimaryKey(id);
 		goods.setIsMarketable(status);
+
+		TbItemExample example=new TbItemExample();
+		TbItemExample.Criteria criteria=example.createCriteria();
+		criteria.andGoodsIdEqualTo(id);
+		List<TbItem> list=itemMapper.selectByExample(example);
+		for (TbItem l:list){
+			l.setStatus(status);
+			itemMapper.updateByPrimaryKey(l);
+		}
+
 		goodsMapper.updateByPrimaryKey(goods);
 	}
 

@@ -7,6 +7,8 @@ import org.csource.fastdfs.StorageServer;
 import org.csource.fastdfs.TrackerClient;
 import org.csource.fastdfs.TrackerServer;
 
+import java.io.IOException;
+
 public class FastDFSClient {
 
 	private TrackerClient trackerClient = null;
@@ -21,7 +23,7 @@ public class FastDFSClient {
 		ClientGlobal.init(conf);
 		trackerClient = new TrackerClient();
 		trackerServer = trackerClient.getConnection();
-		storageServer = null;
+		storageServer = trackerClient.getStoreStorage(trackerServer,"group1");
 		storageClient = new StorageClient1(trackerServer, storageServer);
 	}
 	
@@ -70,5 +72,36 @@ public class FastDFSClient {
 	
 	public String uploadFile(byte[] fileContent, String extName) throws Exception {
 		return uploadFile(fileContent, extName, null);
+	}
+
+	public void delete_file(String name) {
+        StorageClient1 storageClient1=null;
+		try {
+		    if (trackerServer==null) {
+                System.out.println("这玩意空的.....");
+            }
+            storageClient1 = new StorageClient1(trackerServer, storageServer);
+		    storageClient1.delete_file1(name);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+            if (storageServer != null){
+                try {
+                    storageServer.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (trackerServer != null){
+                try {
+                    trackerServer.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            storageClient1 = null;
+        }
+
+
 	}
 }

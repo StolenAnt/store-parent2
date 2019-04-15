@@ -15,6 +15,13 @@
         <module>store-dao</module>
         <module>store-sellergoods-interface</module>
         <module>store-common</module>
+        <module>store-content-interface</module>
+        <module>store-content-service</module>
+        <module>store-portal-web</module>
+        <module>store-solr-util</module>
+        <module>store-search-interface</module>
+        <module>store-search-service</module>
+        <module>store-search-web</module>
     </modules>
     <packaging>pom</packaging>
 

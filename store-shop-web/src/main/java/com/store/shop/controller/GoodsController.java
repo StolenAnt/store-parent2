@@ -93,7 +93,7 @@ public class GoodsController {
 	 */
 	@RequestMapping("/findOne")
 	public Goods findOne(Long id){
-		return goodsService.findOne(id);		
+		return goodsService.findOne(id);
 	}
 	
 	/**

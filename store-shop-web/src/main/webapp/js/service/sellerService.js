@@ -30,7 +30,11 @@ app.service('sellerService',function($http){
 		return $http.post('../seller/search.do?page='+page+"&rows="+rows, searchEntity);
 	}
 	this.loginName=function () {
-		return $http.get('../login/name.do');
+        return $http.get('../login/name.do');
+    }
+
+    this.updatepass=function (oldpass,newpass,qpass) {
+        return $http.get('../seller/updatepass.do?oldpass='+oldpass+'&newpass='+newpass+'&qpass='+qpass);
     }
 
 });

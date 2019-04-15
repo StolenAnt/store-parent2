@@ -115,6 +115,8 @@ app.controller('goodsController' ,function($scope,$controller,$location,goodsSer
 		);
 	}
 
+	//图片上传
+
 	$scope.uploadFile=function () {
 		uploadService.uploadFile().success(
 			function (response) {

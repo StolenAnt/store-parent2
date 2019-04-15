@@ -17,6 +17,7 @@ import com.github.pagehelper.PageHelper;
 
 
 import entity.PageResult;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -110,10 +111,38 @@ public class TypeTemplateServiceImpl implements TypeTemplateService {
 	
 		}
 		
-		Page<TbTypeTemplate> page= (Page<TbTypeTemplate>)typeTemplateMapper.selectByExample(example);		
+		Page<TbTypeTemplate> page= (Page<TbTypeTemplate>)typeTemplateMapper.selectByExample(example);
+
+		saveToRedis();
+		//将缓存处理
 		return new PageResult(page.getTotal(), page.getResult());
 	}
 
+	//放入缓存当中
+	@Autowired
+	private RedisTemplate redisTemplate;
+
+	private void saveToRedis(){
+		List<TbTypeTemplate> typeTemplateList = findAll();
+		for (TbTypeTemplate tbTypeTemplate:typeTemplateList){
+            List brandList1 = (List) redisTemplate.boundHashOps("brandList").get(tbTypeTemplate.getId());
+            List specList1 = (List) redisTemplate.boundHashOps("specList").get(tbTypeTemplate.getId());
+            if (brandList1==null||specList1==null) {
+                //得到品牌
+                List brandList = JSON.parseArray(tbTypeTemplate.getBrandIds(), Map.class);
+                //System.out.println(brandList);
+                redisTemplate.boundHashOps("brandList").put(tbTypeTemplate.getId(), brandList);
+
+                //得到规格
+                List<Map> specList = findSpecList(tbTypeTemplate.getId());
+                redisTemplate.boundHashOps("specList").put(tbTypeTemplate.getId(), specList);
+            }else {
+                return;
+            }
+
+		}
+		System.out.println("品牌列表...模板放入缓存......");
+	}
 	@Override
 	public List<Map> selectOptionList() {
 		return typeTemplateMapper.selectOptionList();
@@ -125,7 +154,9 @@ public class TypeTemplateServiceImpl implements TypeTemplateService {
 	private TbSpecificationOptionMapper tbSpecificationOptionMapper;
 	@Override
 	public List<Map> findSpecList(Long id) {
+		//根据Id查询到模板对象
 		TbTypeTemplate tbTypeTemplate=typeTemplateMapper.selectByPrimaryKey(id);
+		//获得规格数据 spec_id 转换一下
 		List<Map> list=JSON.parseArray(tbTypeTemplate.getSpecIds(),Map.class);
 		for (Map map:list){
 			TbSpecificationOptionExample example=new TbSpecificationOptionExample();
