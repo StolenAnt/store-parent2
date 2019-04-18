@@ -1,8 +1,12 @@
 package com.store.manager.controller;
+import java.util.Arrays;
 import java.util.List;
 
+
 import com.store.pojo.TbGoods;
+import com.store.pojo.TbItem;
 import com.store.pojogroup.Goods;
+
 import com.store.sellergoods.service.GoodsService;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +27,11 @@ public class GoodsController {
 
 	@Reference
 	private GoodsService goodsService;
+
+//	@Reference(timeout = 100000)
+//	private ItemSearchService itemSearchService;
+
+
 	
 	/**
 	 * 返回全部列表
@@ -80,6 +89,10 @@ public class GoodsController {
 	public Result delete(Long [] ids){
 		try {
 			goodsService.deleteManager(ids);
+
+//			//从索引库删除
+//
+//			itemSearchService.deleteByGoodsIds(Arrays.asList(ids));
 			return new Result(true, "删除成功"); 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -105,12 +118,20 @@ public class GoodsController {
 		try {
 
 			goodsService.UpdateStatus(ids, status);
+
 			return new Result(true,"成功");
 		}catch (Exception e){
 			e.printStackTrace();
 			return new Result(false,"失败");
 		}
 	}
+
+//	@RequestMapping("/test")
+//	public void genHtml(Long id){
+//		itemPageService.genItemHtml(id);
+//	}
+
+
 
 
 }

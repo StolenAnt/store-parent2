@@ -11,6 +11,9 @@
         <module name="store-content-service" />
         <module name="store-dao" />
         <module name="store-manager-web" />
+        <module name="store-page-interface" />
+        <module name="store-page-service" />
+        <module name="store-page-web" />
         <module name="store-pojo" />
         <module name="store-portal-web" />
         <module name="store-search-interface" />

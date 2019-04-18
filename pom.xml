@@ -22,6 +22,9 @@
         <module>store-search-interface</module>
         <module>store-search-service</module>
         <module>store-search-web</module>
+        <module>store-page-interface</module>
+        <module>store-page-service</module>
+        <module>store-page-web</module>
     </modules>
     <packaging>pom</packaging>
 

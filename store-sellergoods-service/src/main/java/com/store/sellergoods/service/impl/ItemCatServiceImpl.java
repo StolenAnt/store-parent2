@@ -56,7 +56,9 @@ public class ItemCatServiceImpl implements ItemCatService {
 	 */
 	@Override
 	public void add(TbItemCat itemCat) {
-		itemCatMapper.insert(itemCat);		
+		itemCatMapper.insert(itemCat);
+		redisTemplate.boundHashOps("itemCat").put(itemCat.getName(), itemCat.getTypeId());
+		System.out.println("将模板Id放入缓存.......");
 	}
 
 	
@@ -65,7 +67,9 @@ public class ItemCatServiceImpl implements ItemCatService {
 	 */
 	@Override
 	public void update(TbItemCat itemCat){
+		redisTemplate.boundHashOps("itemCat").put(itemCat.getName(), itemCat.getTypeId());
 		itemCatMapper.updateByPrimaryKey(itemCat);
+		System.out.println("缓存更新了模板Id.....");
 	}	
 	
 	/**
@@ -85,6 +89,10 @@ public class ItemCatServiceImpl implements ItemCatService {
 	public void delete(Long[] ids) {
 		for(Long id:ids){
 			itemCatMapper.deleteByPrimaryKey(id);
+
+			TbItemCat itemCat = itemCatMapper.selectByPrimaryKey(id);
+			redisTemplate.boundHashOps("itemcat").delete(itemCat.getName());
+			System.out.println("缓存清空了模板Id.....");
 		}		
 	}
 	
@@ -113,19 +121,15 @@ public class ItemCatServiceImpl implements ItemCatService {
 		TbItemCatExample.Criteria criteria=example.createCriteria();
 		criteria.andParentIdEqualTo(id);
 
-		//将模板ID放入缓存 (商品分类名称作为Key)
+//		//将模板ID放入缓存 (商品分类名称作为Key)
+//
+//        List<TbItemCat> itemCatList = findAll();
+//        for (TbItemCat itemCat:itemCatList){
+//				redisTemplate.boundHashOps("itemCat").put(itemCat.getName(), itemCat.getTypeId());
+//
+//			}
+//			System.out.println("执行完毕.......");
 
-        List<TbItemCat> itemCatList = findAll();
-        for (TbItemCat itemCat:itemCatList){
-			Long name=0l;
-			name= (Long) redisTemplate.boundHashOps("itemCat").get(itemCat.getName());
-			if (name==null && name==0l) {
-				redisTemplate.boundHashOps("itemCat").put(itemCat.getName(), itemCat.getTypeId());
-			}else{
-				break;
-			}
-        }
-        System.out.println("将模板Id放入缓存.......");
 
         return itemCatMapper.selectByExample(example);
 	}

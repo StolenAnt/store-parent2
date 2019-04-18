@@ -102,17 +102,17 @@
 		                           <div class="col-md-10 data">
 		                               <input type="text" class="form-control" ng-model="entity.goods.goodsName"   placeholder="商品名称" value="">
 		                           </div>
-		                           
+
 		                           <div class="col-md-2 title"  >品牌</div>
 		                           <div class="col-md-10 data">
 		                              <select class="form-control"  ng-model="entity.goods.brandId" ng-options="brand.id as brand.text  for brand in typeTemplate.brandIds"></select>
 		                           </div>
-		
+
 								   <div class="col-md-2 title">副标题</div>
 		                           <div class="col-md-10 data">
 		                               <input type="text" class="form-control" ng-model="entity.goods.caption" placeholder="副标题" value="">
 		                           </div>
-		                           
+
 		                           <div class="col-md-2 title">价格</div>
 		                           <div class="col-md-10 data">
 		                           	   <div class="input-group">
@@ -122,8 +122,8 @@
 		                           </div>
 		                           
 		                           <div class="col-md-2 title editer">商品介绍</div>
-                                   <div class="col-md-10 data editer">
-                                       <textarea name="content" style="width:800px;height:400px;visibility:hidden;" ></textarea>
+                                   <div class="col-md-10 data editer" style="position: relative;z-index: auto">
+                                       <textarea name="content" style="width:1000px;height:320px;visibility:hidden;" ></textarea>
                                    </div>
 		                           
 		                           <div class="col-md-2 title rowHeight2x">包装列表</div>
@@ -298,8 +298,9 @@
 						<table>
 							<tr>
 								<td>
-								<input type="file" id="file" />				                
-					                <button class="btn btn-primary" type="button" ng-click="uploadFile()">
+								<input type="file" id="file" />
+									<input type="text" ng-model="image_entity.url" />
+									<button class="btn btn-primary" type="button" ng-click="uploadFile()">
 				                   		上传
 					                </button>	
 					            </td>

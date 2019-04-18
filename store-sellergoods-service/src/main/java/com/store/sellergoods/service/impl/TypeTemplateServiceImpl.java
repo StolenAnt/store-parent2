@@ -31,7 +31,9 @@ public class TypeTemplateServiceImpl implements TypeTemplateService {
 
 	@Autowired
 	private TbTypeTemplateMapper typeTemplateMapper;
-	
+
+	@Autowired
+	private RedisTemplate redisTemplate;
 	/**
 	 * 查询全部
 	 */
@@ -55,7 +57,12 @@ public class TypeTemplateServiceImpl implements TypeTemplateService {
 	 */
 	@Override
 	public void add(TbTypeTemplate typeTemplate) {
-		typeTemplateMapper.insert(typeTemplate);		
+		typeTemplateMapper.insert(typeTemplate);
+		System.out.println(typeTemplate.getId());
+		//新增模板放入缓存
+
+		//更新缓存
+		saveToRedisOne(typeTemplate);
 	}
 
 	
@@ -65,6 +72,9 @@ public class TypeTemplateServiceImpl implements TypeTemplateService {
 	@Override
 	public void update(TbTypeTemplate typeTemplate){
 		typeTemplateMapper.updateByPrimaryKey(typeTemplate);
+
+		//更新缓存
+		saveToRedisOne(typeTemplate);
 	}	
 	
 	/**
@@ -84,6 +94,12 @@ public class TypeTemplateServiceImpl implements TypeTemplateService {
 	public void delete(Long[] ids) {
 		for(Long id:ids){
 			typeTemplateMapper.deleteByPrimaryKey(id);
+
+			//缓存中清空
+			TbTypeTemplate typeTemplate=typeTemplateMapper.selectByPrimaryKey(id);
+			redisTemplate.boundHashOps("brandList").delete(typeTemplate.getId());
+			redisTemplate.boundHashOps("specList").delete(typeTemplate.getId());
+			System.out.println("缓存已经清空了品牌和规格.....");
 		}		
 	}
 	
@@ -113,21 +129,24 @@ public class TypeTemplateServiceImpl implements TypeTemplateService {
 		
 		Page<TbTypeTemplate> page= (Page<TbTypeTemplate>)typeTemplateMapper.selectByExample(example);
 
-		saveToRedis();
+		//saveToRedis();
 		//将缓存处理
 		return new PageResult(page.getTotal(), page.getResult());
 	}
 
 	//放入缓存当中
-	@Autowired
-	private RedisTemplate redisTemplate;
+	private void saveToRedisOne(TbTypeTemplate typeTemplate){
+		List brandList = JSON.parseArray(typeTemplate.getBrandIds(), Map.class);
+		List<Map> specList = findSpecList(typeTemplate.getId());
+		redisTemplate.boundHashOps("brandList").put(typeTemplate.getId(), brandList);
+		redisTemplate.boundHashOps("specList").put(typeTemplate.getId(), specList);
+		System.out.println("品牌..规格...列表放入缓存");
+	}
+
 
 	private void saveToRedis(){
 		List<TbTypeTemplate> typeTemplateList = findAll();
 		for (TbTypeTemplate tbTypeTemplate:typeTemplateList){
-            List brandList1 = (List) redisTemplate.boundHashOps("brandList").get(tbTypeTemplate.getId());
-            List specList1 = (List) redisTemplate.boundHashOps("specList").get(tbTypeTemplate.getId());
-            if (brandList1==null||specList1==null) {
                 //得到品牌
                 List brandList = JSON.parseArray(tbTypeTemplate.getBrandIds(), Map.class);
                 //System.out.println(brandList);
@@ -136,12 +155,10 @@ public class TypeTemplateServiceImpl implements TypeTemplateService {
                 //得到规格
                 List<Map> specList = findSpecList(tbTypeTemplate.getId());
                 redisTemplate.boundHashOps("specList").put(tbTypeTemplate.getId(), specList);
-            }else {
-                return;
-            }
 
+			System.out.println("品牌列表...模板放入缓存......");
 		}
-		System.out.println("品牌列表...模板放入缓存......");
+
 	}
 	@Override
 	public List<Map> selectOptionList() {

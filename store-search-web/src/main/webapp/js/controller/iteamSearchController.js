@@ -1,4 +1,4 @@
-app.controller('searchController',function ($scope,searchService) {
+app.controller('searchController',function ($location,$scope,searchService) {
 
 
 
@@ -107,5 +107,22 @@ app.controller('searchController',function ($scope,searchService) {
         $scope.searchMap.sort=sort;
         $scope.searchMap.sortField=sortField;
         $scope.search();//查询
+    }
+
+    //关键字判断是否是品牌
+    $scope.keywordsIsBrand=function () {
+
+        for(var i=0;i<$scope.resultMap.brandList.length;i++){
+            if($scope.searchMap.keywords.indexOf($scope.resultMap.brandList[i].text)>=0){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    //首页加载关键字
+    $scope.loadkeywords=function () {
+       $scope.searchMap.keywords= $location.search()['keywords'];
+       $scope.search();
     }
 });

@@ -100,12 +100,16 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.store.pojo.TbTypeTemplate" >
-    insert into tb_type_template (id, name, spec_ids, 
+    <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+      SELECT LAST_INSERT_ID() AS id
+    </selectKey>
+    insert into tb_type_template (id, name, spec_ids,
       brand_ids, custom_attribute_items)
     values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{specIds,jdbcType=VARCHAR}, 
       #{brandIds,jdbcType=VARCHAR}, #{customAttributeItems,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.store.pojo.TbTypeTemplate" >
+
     insert into tb_type_template
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >

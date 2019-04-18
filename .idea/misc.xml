@@ -13,6 +13,8 @@
   <component name="FrameworkDetectionExcludesConfiguration">
     <file type="web" url="file://$PROJECT_DIR$/store-content-service" />
     <file type="web" url="file://$PROJECT_DIR$/store-manager-web" />
+    <file type="web" url="file://$PROJECT_DIR$/store-page-service" />
+    <file type="web" url="file://$PROJECT_DIR$/store-page-web" />
     <file type="web" url="file://$PROJECT_DIR$/store-portal-web" />
     <file type="web" url="file://$PROJECT_DIR$/store-search-service" />
     <file type="web" url="file://$PROJECT_DIR$/store-search-web" />

@@ -1,5 +1,6 @@
 package com.store.sellergoods.service.impl;
 import java.text.DateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -253,6 +254,8 @@ public class GoodsServiceImpl implements GoodsService {
 			goods.setAuditStatus(status);
 			goodsMapper.updateByPrimaryKey(goods);
 
+
+
 		}
 	}
 
@@ -279,6 +282,24 @@ public class GoodsServiceImpl implements GoodsService {
 		}
 
 		goodsMapper.updateByPrimaryKey(goods);
+	}
+
+	//根据SPU的ID集合查询SKU列表 然后动态更新Solr
+	public List<TbItem> findItemListByGoodsIdListAndStatus(Long goodsId,String status){
+
+			TbItemExample example=new TbItemExample();
+			TbItemExample.Criteria criteria=example.createCriteria();
+			criteria.andStatusEqualTo(status);//状态
+			criteria.andGoodsIdEqualTo(goodsId);//指定条件 SPUID集合
+		List<TbItem> itemList = itemMapper.selectByExample(example);
+		for (TbItem item:itemList){
+			//[] 方括号 表示集合 可以用parseArray  { }开始表示对象 得用Object
+			Map map= JSON.parseObject(item.getSpec(),Map.class);
+			item.setSpecMap(map);
+		}
+
+		return itemList;
+
 	}
 
 }

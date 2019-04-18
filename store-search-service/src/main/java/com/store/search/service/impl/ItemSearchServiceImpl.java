@@ -59,6 +59,8 @@ public class ItemSearchServiceImpl implements ItemSearchService {
     }
 
 
+
+
     //查询列表
     private Map searchList(Map searchMap){
         Map map=new HashMap();
@@ -126,12 +128,12 @@ public class ItemSearchServiceImpl implements ItemSearchService {
 
         //1.6分页
         Integer pageNo=(Integer)searchMap.get("pageNo");//获取页码
-        System.out.println("当前页码"+pageNo);
+//        System.out.println("当前页码"+pageNo);
         if (pageNo==null){
             pageNo=1;
         }
         Integer pageSize=(Integer)searchMap.get("pageSize");
-        System.out.println("当前页大小"+pageSize);
+//        System.out.println("当前页大小"+pageSize);
         if (pageSize==null){
             pageSize=20;
         }
@@ -177,12 +179,12 @@ public class ItemSearchServiceImpl implements ItemSearchService {
         }
         map.put("rows",page.getContent());
         map.put("totalPage",page.getTotalPages());//总页数
-        System.out.println("总页数"+page.getTotalPages());
+//        System.out.println("总页数"+page.getTotalPages());
         map.put("total",page.getTotalElements());//总记录数
         return map;
     }
 
-    //分组查询商品分类列表
+    //2.分组查询商品分类列表
     private List<String> searchCategoryList(Map searchMap){
         List<String> list=new ArrayList();
         Query query=new SimpleQuery("*:*");
@@ -210,22 +212,41 @@ public class ItemSearchServiceImpl implements ItemSearchService {
         return list;
     }
 
-    //查询品牌和规格列表
+    //3.查询品牌和规格列表
 
     private Map searchBrandAndSpecList(String categoryName){
         Map map=new HashMap();
-        //1.根据商品分类名称得到模板ID
+        //3.1.根据商品分类名称得到模板ID
         Long templatedId= (Long) redisTemplate.boundHashOps("itemCat").get(categoryName);
         if (templatedId!=null) {
-            //2.根据模板Id获取品牌列表
+            //3.2.根据模板Id获取品牌列表
             List brandList = (List) redisTemplate.boundHashOps("brandList").get(templatedId);
             map.put("brandList", brandList);
 
-            //3.根据模板Id获取规格列表
+            //3.3.根据模板Id获取规格列表
             List specList = (List) redisTemplate.boundHashOps("specList").get(templatedId);
             map.put("specList", specList);
         }
         return map;
+    }
+
+    //导入Solr列表
+    @Override
+    public void importList(List list) {
+
+        System.out.println(list.get(0));
+        solrTemplate.saveBeans(list);
+
+        solrTemplate.commit();
+    }
+
+    @Override
+    public void deleteByGoodsIds(List goodsids) {
+        Query query=new SimpleQuery("*:*");
+        Criteria criteria=new Criteria("item_goodsid").in(goodsids);
+        query.addCriteria(criteria);
+        solrTemplate.delete(query);
+        solrTemplate.commit();
     }
 
 }

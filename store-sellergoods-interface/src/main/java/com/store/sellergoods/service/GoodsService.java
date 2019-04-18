@@ -3,6 +3,7 @@ import java.util.List;
 
 
 import com.store.pojo.TbGoods;
+import com.store.pojo.TbItem;
 import com.store.pojogroup.Goods;
 import entity.PageResult;
 /**
@@ -67,5 +68,7 @@ public interface GoodsService {
 	public void deleteManager(Long[] ids);
 
 	public void UpdateMarkStatus(Long id,String status);
+
+	public List<TbItem> findItemListByGoodsIdListAndStatus(Long goodsIds, String staus);
 	
 }
