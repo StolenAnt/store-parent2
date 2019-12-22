@@ -148,6 +148,12 @@
 
         </dependency>
 
+        <dependency>
+            <groupId>com.city.storeparent</groupId>
+            <artifactId>store-order-interface</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
 
 
 

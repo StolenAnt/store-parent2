@@ -6,14 +6,22 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="itheimayi_sms_service" />
+        <module name="store-cart-interface" />
+        <module name="store-cart-service" />
+        <module name="store-cart-web" />
         <module name="store-common" />
         <module name="store-content-interface" />
         <module name="store-content-service" />
         <module name="store-dao" />
         <module name="store-manager-web" />
+        <module name="store-order-interface" />
+        <module name="store-order-service" />
         <module name="store-page-interface" />
         <module name="store-page-service" />
         <module name="store-page-web" />
+        <module name="store-pay-interface" />
+        <module name="store-pay-service" />
         <module name="store-pojo" />
         <module name="store-portal-web" />
         <module name="store-search-interface" />
@@ -23,6 +31,9 @@
         <module name="store-sellergoods-service" />
         <module name="store-shop-web" />
         <module name="store-solr-util" />
+        <module name="store-user-interface" />
+        <module name="store-user-service" />
+        <module name="store-user-web" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -34,6 +45,7 @@
       <module name="pinyougou-sellergoods-interface" target="1.7" />
       <module name="pinyougou-sellergoods-service" target="1.7" />
       <module name="pinyougou-shop-web" target="1.7" />
+      <module name="store-catr-web" target="1.7" />
     </bytecodeTargetLevel>
   </component>
 </project>

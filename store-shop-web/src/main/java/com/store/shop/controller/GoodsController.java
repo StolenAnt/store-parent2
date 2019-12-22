@@ -191,12 +191,14 @@ public class GoodsController {
 
 			final String jsonString = JSON.toJSONString(item);
 			//发消息 传输对象必须是实现了序列化接口
+
 			jmsTemplate.send(queueSolrDestination, new MessageCreator() {
 				@Override
 				public Message createMessage(Session session) throws JMSException {
 					return session.createTextMessage(jsonString);
 				}
 			});
+
 			System.out.println("消息发送完毕------");
 
 

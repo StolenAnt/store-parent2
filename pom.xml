@@ -25,6 +25,18 @@
         <module>store-page-interface</module>
         <module>store-page-service</module>
         <module>store-page-web</module>
+        <module>itheimayi_sms_service</module>
+        <module>store-user-interface</module>
+        <module>store-user-service</module>
+        <module>store-user-web</module>
+        <module>store-cart-interface</module>
+        <module>store-cart-web</module>
+        <module>store-cart-service</module>
+        <module>store-order-interface</module>
+        <module>store-order-service</module>
+        <module>store-pay-interface</module>
+        <module>store-pay-service</module>
+
     </modules>
     <packaging>pom</packaging>
 

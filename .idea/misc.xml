@@ -11,15 +11,23 @@
     </session>
   </component>
   <component name="FrameworkDetectionExcludesConfiguration">
+    <file type="web" url="file://$PROJECT_DIR$/store-cart-service" />
+    <file type="web" url="file://$PROJECT_DIR$/store-cart-web" />
+    <file type="web" url="file://$PROJECT_DIR$/store-cat-service" />
+    <file type="web" url="file://$PROJECT_DIR$/store-catr-web" />
     <file type="web" url="file://$PROJECT_DIR$/store-content-service" />
     <file type="web" url="file://$PROJECT_DIR$/store-manager-web" />
+    <file type="web" url="file://$PROJECT_DIR$/store-order-service" />
     <file type="web" url="file://$PROJECT_DIR$/store-page-service" />
     <file type="web" url="file://$PROJECT_DIR$/store-page-web" />
+    <file type="web" url="file://$PROJECT_DIR$/store-pay-service" />
     <file type="web" url="file://$PROJECT_DIR$/store-portal-web" />
     <file type="web" url="file://$PROJECT_DIR$/store-search-service" />
     <file type="web" url="file://$PROJECT_DIR$/store-search-web" />
     <file type="web" url="file://$PROJECT_DIR$/store-sellergoods-service" />
     <file type="web" url="file://$PROJECT_DIR$/store-shop-web" />
+    <file type="web" url="file://$PROJECT_DIR$/store-user-service" />
+    <file type="web" url="file://$PROJECT_DIR$/store-user-web" />
     <file type="web" url="file://$USER_HOME$/Downloads/百度云下载/49黑马视频/17品优购电商系统开发(学习20天）/代码/品优购系统开发代码/day-01/pinyougou-parent/pinyougou-manager-web" />
     <file type="web" url="file://$USER_HOME$/Downloads/百度云下载/49黑马视频/17品优购电商系统开发(学习20天）/代码/品优购系统开发代码/day-01/pinyougou-parent/pinyougou-sellergoods-service" />
     <file type="web" url="file://$USER_HOME$/Downloads/百度云下载/49黑马视频/17品优购电商系统开发(学习20天）/代码/品优购系统开发代码/day-01/pinyougou-parent/pinyougou-shop-web" />
@@ -36,6 +44,8 @@
     </option>
     <option name="ignoredFiles">
       <set>
+        <option value="$PROJECT_DIR$/store-cat-service/pom.xml" />
+        <option value="$PROJECT_DIR$/store-catr-web/pom.xml" />
         <option value="$USER_HOME$/Downloads/百度云下载/49黑马视频/17品优购电商系统开发(学习20天）/代码/品优购系统开发代码/day-01/pinyougou-parent/pinyougou-common/pom.xml" />
         <option value="$USER_HOME$/Downloads/百度云下载/49黑马视频/17品优购电商系统开发(学习20天）/代码/品优购系统开发代码/day-01/pinyougou-parent/pinyougou-dao/pom.xml" />
         <option value="$USER_HOME$/Downloads/百度云下载/49黑马视频/17品优购电商系统开发(学习20天）/代码/品优购系统开发代码/day-01/pinyougou-parent/pinyougou-manager-web/pom.xml" />
